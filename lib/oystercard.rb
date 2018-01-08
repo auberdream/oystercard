@@ -5,6 +5,7 @@ class Oystercard
   attr_reader :balance
 
   def initialize
+    @in_journey = false
     @balance = 0
   end
 
@@ -14,7 +15,23 @@ class Oystercard
   end
 
   def deduct(money)
-    @balance -= money 
+    @balance -= money
+  end
+
+  def touch_in
+    @in_journey = true
+    in_journey?
+  end
+
+  def touch_out
+    @in_journey = false
+    in_journey?
+  end
+
+  # private
+
+  def in_journey?
+    @in_journey ? "in use" : "not in use"
   end
 
 end

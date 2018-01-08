@@ -31,4 +31,22 @@ describe Oystercard do
 
   end
 
+  describe "#touch_in" do
+    it "returns message when touch in" do
+      expect(subject.touch_in).to eq "in use"
+    end
+  end
+
+  describe "#touch_out" do
+    it "returns message when touch out" do
+      expect(subject.touch_out).to eq "not in use"
+    end
+  end
+
+  describe "#in_journey?" do
+    it "checks if we are in journey or not" do
+      expect(subject.in_journey?).to eq "not in use"
+    end
+  end
+
 end

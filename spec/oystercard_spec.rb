@@ -33,7 +33,12 @@ describe Oystercard do
 
   describe "#touch_in" do
     it "returns message when touch in" do
+      subject.top_up(10)
       expect(subject.touch_in).to eq "in use"
+    end
+
+    it "raises an error if the balance is less than one" do
+      expect { subject.touch_in }.to raise_error("Insufficient funds")
     end
   end
 

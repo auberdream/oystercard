@@ -32,17 +32,28 @@ describe Oystercard do
   end
 
   describe "#touch_in" do
+
+    let(:station) { double("station") }
+
     it "returns message when touch in" do
       subject.top_up(10)
-      expect(subject.touch_in).to eq "in use"
+      expect(subject.touch_in(station)).to eq "in use"
     end
 
     it "raises an error if the balance is less than one" do
-      expect { subject.touch_in }.to raise_error("Insufficient funds")
+      expect { subject.touch_in(station) }.to raise_error("Insufficient funds")
+    end
+
+    it "Stores the station that the oystercard touch_in" do
+      subject.top_up(10)
+      expect { subject.touch_in(station) }.to change{ subject.entry_station }.to(station)
     end
   end
 
   describe "#touch_out" do
+
+    let(:station) { double("station") }
+
     it "returns message when touch out" do
       expect(subject.touch_out).to eq "not in use"
     end
@@ -50,6 +61,12 @@ describe Oystercard do
     it "reduces balance by 1" do
       subject.top_up(10)
       expect { subject.touch_out }.to change{ subject.balance }.by(-1)
+    end
+
+    it "changes entry_station to nil" do
+      subject.top_up(10)
+      subject.touch_in(station)
+      expect { subject.touch_out }.to change{ subject.entry_station }.to(nil)
     end
   end
 

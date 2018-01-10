@@ -1,5 +1,6 @@
 require_relative './station.rb'
 require_relative './journey.rb'
+
 class Oystercard
 
   CARD_LIMIT = 90

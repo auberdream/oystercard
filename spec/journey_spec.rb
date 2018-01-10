@@ -14,7 +14,7 @@ describe Journey do
       allow(subject).to receive(:complete?) { false }
       expect(subject.fare).to eq Journey::PENALTY_FARE
     end
-  end
 
+  end
 
 end

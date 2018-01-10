@@ -26,19 +26,10 @@ describe Oystercard do
 
     let(:station) { double("station") }
 
-    # it "returns message when touch in" do
-    #   subject.top_up(10)
-    #   expect(subject.touch_in(station)).to eq "In"
-    # end
-
     it "raises an error if the balance is less than one" do
       expect { subject.touch_in(station) }.to raise_error("Insufficient funds")
     end
 
-    it "Stores the station that the oystercard touch_in" do
-      subject.top_up(10)
-      expect { subject.touch_in(station) }.to change{ subject.entry_station }.to(station)
-    end
   end
 
   describe "#touch_out" do
@@ -46,20 +37,10 @@ describe Oystercard do
     let(:station) { double("station") }
     let(:exit_station) { double("station") }
 
-    # it "returns message when touch out" do
-    #   expect(subject.touch_out(station)).to eq "Out"
-    # end
-
     it "reduces balance by 1" do
       subject.top_up(10)
       subject.touch_in(station)
       expect { subject.touch_out(station) }.to change{ subject.balance }.by(-1)
-    end
-
-    it "changes entry_station to nil" do
-      subject.top_up(10)
-      subject.touch_in(station)
-      expect { subject.touch_out(station) }.to change{ subject.entry_station }.to(nil)
     end
 
     it "stores journey" do

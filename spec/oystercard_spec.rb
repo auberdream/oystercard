@@ -13,7 +13,7 @@ describe Oystercard do
   describe "#top_up" do
 
     it "tops up the balance" do
-      expect(subject.top_up(10)).to eq 10
+      expect { subject.top_up(10) }.to change { subject.balance }.to(10)
     end
 
     it "raises error if putting maximum limit on card" do
@@ -26,10 +26,10 @@ describe Oystercard do
 
     let(:station) { double("station") }
 
-    it "returns message when touch in" do
-      subject.top_up(10)
-      expect(subject.touch_in(station)).to eq "In"
-    end
+    # it "returns message when touch in" do
+    #   subject.top_up(10)
+    #   expect(subject.touch_in(station)).to eq "In"
+    # end
 
     it "raises an error if the balance is less than one" do
       expect { subject.touch_in(station) }.to raise_error("Insufficient funds")
@@ -46,12 +46,13 @@ describe Oystercard do
     let(:station) { double("station") }
     let(:exit_station) { double("station") }
 
-    it "returns message when touch out" do
-      expect(subject.touch_out(station)).to eq "Out"
-    end
+    # it "returns message when touch out" do
+    #   expect(subject.touch_out(station)).to eq "Out"
+    # end
 
     it "reduces balance by 1" do
       subject.top_up(10)
+      subject.touch_in(station)
       expect { subject.touch_out(station) }.to change{ subject.balance }.by(-1)
     end
 
@@ -64,15 +65,9 @@ describe Oystercard do
     it "stores journey" do
       subject.top_up(10)
       subject.touch_in(station)
-      expect { subject.touch_out(station) }.to change{ subject.history }.to([[station, station]])
+      expect { subject.touch_out(station) }.to change{ subject.history }.to([{entry_station: station, exit_station: station}])
     end
 
-  end
-
-  describe "#in_journey?" do
-    it "checks if we are in journey or not" do
-      expect(subject.in_journey?).to eq "Out"
-    end
   end
 
   describe "#history" do

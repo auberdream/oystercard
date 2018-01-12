@@ -11,9 +11,7 @@ class Journey
   end
 
   def fare
-    return MIN_FARE if (started? && complete?)
-    return PENALTY_FARE if (started? && !complete?)
-    0
+    complete? ? MIN_FARE : PENALTY_FARE
   end
 
   def start(station = nil)
@@ -26,11 +24,7 @@ class Journey
 
   private
   def complete?
-    ((@entry_station != nil) && (@exit_station != nil))
-  end
-
-  def started?
-    @entry_station != nil
+    !@exit_station.nil? && !@entry_station.nil?
   end
 
 end

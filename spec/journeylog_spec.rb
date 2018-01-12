@@ -2,14 +2,20 @@ require 'journeylog'
 
 describe Journeylog do
   let(:journey) { double(:journey) }
-  let(:entry_station) { double(:station) }
+  let(:station) { double(:station) }
+  let(:journey_class) { double :journey_class, new: journey }
+  subject {described_class.new(journey_class: journey_class)}
 
   describe '#start'do
     it 'creates a new journey' do
-      allow(Journey).to receive(:new).and_return(journey)
-      allow(journey).to receive(:start)
-      expect{ subject.start(entry_station) }.to change { subject.journey }.to(journey)
+      expect(journey_class).to receive(:new).with(entry_station: station)
+      subject.start(station)
     end
 
+    it 'records a journey' do
+
+    end
+    
   end
+
 end

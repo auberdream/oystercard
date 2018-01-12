@@ -14,6 +14,7 @@ describe Journeylog do
 
     it 'records a journey' do
     end
+  end
 
   describe '#finish' do
     it 'finishes a journey' do
@@ -21,8 +22,11 @@ describe Journeylog do
       expect(journey).to receive(:finish).with(exit_station: station)
       subject.finish(station)
     end
-  end
 
+    it 'adds journey to journeys' do
+      allow(journey).to receive(:finish)
+      subject.start(station)
+      expect { subject.finish(station) }.to change { subject.journeys }.to([journey])
+    end
   end
-
 end

@@ -12,6 +12,11 @@ class Journeylog
 
   def finish(station)
     @current_journey.finish(exit_station: station)
+    @journeys << @current_journey
+  end
+
+  def journeys
+    @journeys.dup
   end
 
   private

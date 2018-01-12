@@ -10,6 +10,10 @@ class Journeylog
     @current_journey = current_journey(station)
   end
 
+  def finish(station)
+    @current_journey.finish(exit_station: station)
+  end
+
   private
 
   def current_journey(station)
